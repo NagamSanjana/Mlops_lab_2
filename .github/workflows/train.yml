@@ -1,0 +1,44 @@
+name: Lab2 ML Automation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run training
+        run: python train.py
+
+      - name: Job Summary
+        run: |
+            echo "## Lab 2 Results" >> $GITHUB_STEP_SUMMARY
+            echo "**Name:** Sanjana" >> $GITHUB_STEP_SUMMARY
+            echo "**Roll No:** 2022BCS0208" >> $GITHUB_STEP_SUMMARY
+            echo "### Metrics" >> $GITHUB_STEP_SUMMARY
+            if [ -f output/results.json ]; then
+              cat output/results.json >> $GITHUB_STEP_SUMMARY
+            else
+              echo "results.json not found" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab2-artifacts
+          path: output/
