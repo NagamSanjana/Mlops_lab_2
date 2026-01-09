@@ -18,7 +18,7 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor
 
 
-data = pd.read_csv("/content/winequality-red.csv", sep=';')
+data = pd.read_csv("winequality-red.csv", sep=';')
 
 num_samples = data.shape[0]
 num_features = data.shape[1] - 1
